@@ -1,0 +1,25 @@
+<!-- "/users" ⇒ outputs an < ul > with the user names or error txt -->
+<%- include ('includes/head.ejs') %>
+</head>
+<body>
+    <%- include ('includes/nav.ejs') %>
+    <main>
+        <% if (names.length > 0) { %>   
+
+    <div>
+        <h1>Usernames:</h1>
+        <% for (let usernames of names ) {%>
+       
+        <ul>
+            <li>
+                <%= usernames.title %>
+            </li>
+        </ul>
+        <% } %>
+    </div>
+    <% } else { %>
+        <h1>No Users Found.</h1>
+        <% } %>
+    </main>
+    
+    <%- include ('includes/end.ejs') %>

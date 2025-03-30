@@ -1,0 +1,12 @@
+<!-- "/" holds a < form > that allows users to input their name -->
+<%- include ('includes/head.ejs') %>
+</head>
+<body>
+    <%- include ('includes/nav.ejs') %>
+    <div>
+        <form action="/" method="POST">
+            <input type="text" name="username" title="username">
+            <button type="submit">Save Name</button>
+        </form>
+    </div>
+    <%- include ('includes/end.ejs') %>
