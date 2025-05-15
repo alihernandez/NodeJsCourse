@@ -20,8 +20,8 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  const products = Product.fetchAll();
-//   console.log(adminData.products);
+  Product.fetchAll((products) => {
+    //   console.log(adminData.products);
   res.render("shop", {
     prods: products,
     docTitle: "Shop",
@@ -30,4 +30,5 @@ exports.getProducts = (req, res, next) => {
     activeShop: true,
     productCSS: true,
   });
+});
 };
