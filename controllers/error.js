@@ -1,3 +1,3 @@
 exports.get404 = (req, res, next) => {
-  res.render("404", { docTitle: "Not Found" });
+  res.render("404", { docTitle: "Not Found", path: "/404"  });
 };
