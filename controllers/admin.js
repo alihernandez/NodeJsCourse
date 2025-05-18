@@ -1,4 +1,4 @@
-const Product = require("../models/product")
+const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
   // console.log("in the middleware");
@@ -12,6 +12,18 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
+exports.getProducts = (req, res, next) => {
+    Product.fetchAll(products => {
+    //   console.log(adminData.products);
+  res.render("admin/products", {
+    prods: products,
+    docTitle: "Admin Products",
+    path: "/admin/products"
+  });
+});
+};
+
+
 exports.postAddProduct = (req, res, next) => {
   const product = new Product(req.body.title);
   product.save();
@@ -19,16 +31,3 @@ exports.postAddProduct = (req, res, next) => {
   res.redirect("/");
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    //   console.log(adminData.products);
-  res.render("shop/product-list", {
-    prods: products,
-    docTitle: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true,
-  });
-});
-};
