@@ -13,6 +13,9 @@ console.log("2")
 router.get("/cart", shopController.getCart);
 console.log("3")
 
+router.get("/orders", shopController.getOrders);
+console.log("3")
+
 router.get("/checkout", shopController.getCheckout);
 console.log("4")
 
