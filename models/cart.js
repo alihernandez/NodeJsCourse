@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Cart = require("./cart");
 
 const p = path.join(
   path.dirname(require.main.filename),
@@ -13,9 +14,13 @@ module.exports = class Cart{
 		fs.readFile(p, (err, fileContent) => {
 		let cart = {products:[], totalPrice: 0};
 		if (!err) {
-			cart = JSON.parse(fileContent);
-		}
-
+      try {
+        const parsed = JSON.parse(fileContent);
+        cart = parsed && parsed.products ? parsed : cart;
+      } catch (e) {
+        console.error("Cart file was corrupted or empty:", e);
+      }
+    }
 		// analyze cart => find existing product
 		const existingProductIndex = cart.products.findIndex(prod => prod.id === id);
 		const existingProduct = cart.products[existingProductIndex];
@@ -35,4 +40,25 @@ module.exports = class Cart{
 		});
 			});
 	}
+	static deleteProduct(id, productPrice) {
+  fs.readFile(p, (err, fileContent) => {
+    if (err) {
+      return;
+    }
+    const updatedCart = { ...JSON.parse(fileContent) };
+    const productIndex = updatedCart.products.findIndex(prod => prod.id === id);
+    if (productIndex === -1) {
+      return;
+    }
+    const product = updatedCart.products[productIndex];
+    const productQty = product.qty;
+
+    updatedCart.products = updatedCart.products.filter(prod => prod.id !== id);
+    updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
+
+    fs.writeFile(p, JSON.stringify(updatedCart), err => {
+      console.log(err);
+    });
+  });
+}
 };
