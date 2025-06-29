@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const db = require("./util/database.js");
 // const expressHbs = require("express-handlebars");
 
 const errorController = require("./controllers/error");
